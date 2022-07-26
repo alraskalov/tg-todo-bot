@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const { Telegraf, session, Markup } = require('telegraf');
 const mongoose = require('mongoose');
+const { createUser, checkUser } = require('./controllers/UserController');
 
 const { PORT = 3000, BOT_TOKEN, DB_URL } = process.env;
 
@@ -19,7 +20,7 @@ const keyboard = () => {
   return Markup.keyboard([
     ['➕ Add task', '📃 Task List'],
     ['✏️ Edit Task', '❌ Delete Task'],
-  ]);
+  ]).resize();
 };
 
 bot.hears('📃 Task List', async (ctx) => await ctx.reply('1'));
@@ -29,13 +30,25 @@ bot.hears('❌ Delete Task', async (ctx) => await ctx.reply('3'));
 bot.use(session());
 
 bot.start(async (ctx) => {
-  ctx.session = 'start';
-  const { first_name, last_name } = ctx.message.chat;
-  await ctx.reply(
-    `Hello, ${first_name} ${last_name}!\nWelcome to ToDo Bot`,
-    keyboard()
-  );
-  ctx.session = null;
+  const data = ctx.message.chat;
+  checkUser(data)
+    .then(async (user) => {
+      if (user) {
+        const { firstName, lastName } = user;
+        await ctx.reply(`Welcome back, ${firstName} ${lastName}!`, keyboard());
+        return;
+      }
+      createUser(data)
+        .then(async (user) => {
+          const { firstName, lastName } = user;
+          await ctx.reply(
+            `Hello, ${firstName} ${lastName}!\nWelcome to ToDo Bot`,
+            keyboard()
+          );
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 });
 
 bot.help((ctx) => ctx.reply('Send me a sticker'));
