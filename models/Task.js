@@ -6,21 +6,13 @@ const TaskSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    location: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
     start: {
       type: String,
       required: true,
     },
-    end: {
-      type: String,
-      required: true,
+    isCompleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -28,4 +20,4 @@ const TaskSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('User', TaskSchema);
+module.exports = mongoose.model('Task', TaskSchema);
