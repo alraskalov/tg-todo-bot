@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const { Telegraf, session } = require('telegraf');
+const { Telegraf, session, Markup } = require('telegraf');
 const mongoose = require('mongoose');
 
 const { PORT = 3000, BOT_TOKEN, DB_URL } = process.env;
@@ -15,23 +15,25 @@ mongoose.connect(DB_URL);
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
+const keyboard = () => {
+  return Markup.keyboard([
+    ['➕ Add task', '📃 Task List'],
+    ['✏️ Edit Task', '❌ Delete Task'],
+  ]);
+};
+
+bot.hears('📃 Task List', async (ctx) => await ctx.reply('1'));
+bot.hears('✏️ Edit Task', async (ctx) => await ctx.reply('2'));
+bot.hears('❌ Delete Task', async (ctx) => await ctx.reply('3'));
+
 bot.use(session());
 
 bot.start(async (ctx) => {
   ctx.session = 'start';
   const { first_name, last_name } = ctx.message.chat;
   await ctx.reply(
-    `Привет, ${first_name} ${last_name}!\nДобро пожаловать в ToDo`,
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '123', url: 'https://www.youtube.com/watch?v=uvrhoJdsbmc' },
-            { text: '321', url: 'https://www.youtube.com/watch?v=uvrhoJdsbmc' },
-          ],
-        ],
-      },
-    }
+    `Hello, ${first_name} ${last_name}!\nWelcome to ToDo Bot`,
+    keyboard()
   );
   ctx.session = null;
 });
