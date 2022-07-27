@@ -3,7 +3,7 @@ const { GoogleCalendar, YahooCalendar } = require('datebook');
 const addToCalendar = async (ctx, title, start) => {
   const options = {
     title,
-    start: new Date('2022-07-08T23:30:00'),
+    start: new Date(start),
   };
 
   const googleCalendar = new GoogleCalendar(options).render();
