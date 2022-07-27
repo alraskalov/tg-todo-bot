@@ -1,9 +1,9 @@
-const { GoogleCalendar, YahooCalendar } = require('datebook');
+const { GoogleCalendar } = require('datebook');
 
 const addToCalendar = async (ctx, title, start) => {
   const options = {
     title,
-    start: new Date(start),
+    start: new Date(`${start}`),
   };
 
   const googleCalendar = new GoogleCalendar(options).render();
