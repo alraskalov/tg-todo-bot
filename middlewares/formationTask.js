@@ -1,7 +1,7 @@
 const { createTask } = require('../controllers/TaskController');
 const { addToCalendar } = require('./calendar');
 
-const formationTask = async (ctx, bot) => {
+const formationTask = async (ctx) => {
   const [title, start] = ctx.message.text.split(' | ');
   createTask({ title, start })
     .then(async ({ title, start }) => {
