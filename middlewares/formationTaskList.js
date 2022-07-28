@@ -14,15 +14,16 @@ const formationTaskList = async (ctx) => {
 
       await ctx.reply(`Your tasks:\n\n`);
 
-      tasks.forEach(({ _id, title, date, time }) => {
+      tasks.forEach(({ _id, title, date, time, type }) => {
         return ctx.reply(
-          `ID: ${_id}\nTitle: ${title}\nStart date: ${date}\nTime: ${time}`,
+          `ID: ${_id}\nTitle: ${title}\nStart date: ${date}\nTime: ${time}\nAlerts: ${
+            !type ? 'off' : 'on'
+          }`,
           Markup.inlineKeyboard([
             Markup.button.callback('❌ Delete Task', '❌ Delete Task'),
           ])
         );
       });
-
     })
     .catch((err) => console.log(err));
 };

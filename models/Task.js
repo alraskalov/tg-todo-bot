@@ -13,7 +13,11 @@ const TaskSchema = new mongoose.Schema(
     time: {
       type: String,
       required: true,
-    }
+    },
+    type: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     versionKey: false,

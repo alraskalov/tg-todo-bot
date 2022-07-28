@@ -1,8 +1,13 @@
 const TaskModel = require('../models/Task');
 
 const createTask = async (data) => {
-  const { title, date, time } = data;
-  const task = await TaskModel.create({ title, date, time });
+  const { title, date, time, type } = data;
+  const task = await TaskModel.create({
+    title,
+    date,
+    time,
+    type: Boolean(Number(type)),
+  });
   return task;
 };
 
@@ -19,5 +24,5 @@ const deleteTask = async (id) => {
 module.exports = {
   createTask,
   getTasks,
-  deleteTask
+  deleteTask,
 };
