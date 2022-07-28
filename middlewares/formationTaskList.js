@@ -14,9 +14,9 @@ const formationTaskList = async (ctx) => {
 
       await ctx.reply(`Your tasks:\n\n`);
 
-      tasks.forEach(({ _id, title, start }) => {
+      tasks.forEach(({ _id, title, date, time }) => {
         return ctx.reply(
-          `ID: ${_id}\nTitle: ${title}\nStart date: ${start}`,
+          `ID: ${_id}\nTitle: ${title}\nStart date: ${date}\nTime: ${time}`,
           Markup.inlineKeyboard([
             Markup.button.callback('❌ Delete Task', '❌ Delete Task'),
           ])

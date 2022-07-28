@@ -1,8 +1,8 @@
 const TaskModel = require('../models/Task');
 
 const createTask = async (data) => {
-  const { title, start } = data;
-  const task = await TaskModel.create({ title, start });
+  const { title, date, time } = data;
+  const task = await TaskModel.create({ title, date, time });
   return task;
 };
 

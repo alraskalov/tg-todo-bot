@@ -6,10 +6,14 @@ const TaskSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    start: {
+    date: {
       type: String,
       required: true,
     },
+    time: {
+      type: String,
+      required: true,
+    }
   },
   {
     versionKey: false,
